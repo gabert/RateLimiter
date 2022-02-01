@@ -8,7 +8,7 @@ public class Main {
         RateLimiter rateLimiter = new RateLimiter(1, 1, ChronoUnit.SECONDS);
 
         for (int i = 0; i < 10; i++) {
-            if ( rateLimiter.release() ) {
+            if ( rateLimiter.permit() ) {
                 System.out.println(LocalDateTime.now() + ": #");
             }
         }

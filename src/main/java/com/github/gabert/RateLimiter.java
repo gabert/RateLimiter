@@ -38,16 +38,16 @@ public class RateLimiter {
     }
 
     /**
-     * The release method permits signals possible next execution.
+     * The permit method signals the next execution is possible.
      * If the next execution is not possible, the method will cause the calling thread to sleep for a necessary time
-     * so next release is possible.
+     * so next permit is possible.
      *
      * The method is thread safe. When used in multithreaded environment the method tries to acquire lock. If lock
      * was successful the method returns true signalling the release is possible. Otherwise, the method return false.
      *
      * @return boolean
      */
-    public boolean release() {
+    public boolean permit() {
         if ( ! mutex.tryAcquire() ) {
             return false;
         }
