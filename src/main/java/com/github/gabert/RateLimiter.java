@@ -38,11 +38,14 @@ public class RateLimiter {
     }
 
     /**
-     * If release method returns true the lock acquire was successful. The false means lock was not successful
-     * in a multithreaded environment. I release is not possible due to number of calls exceeded number of calls
-     * within a given timeframe, the RateLimiter will pause the thread until release is possible.
+     * The release method permits signals possible next execution.
+     * If the next execution is not possible, the method will cause the calling thread to sleep for a necessary time
+     * so next release is possible.
      *
-     * @return
+     * The method is thread safe. When used in multithreaded environment the method tries to acquire lock. If lock
+     * was successful the method returns true signalling the release is possible. Otherwise, the method return false.
+     *
+     * @return boolean
      */
     public boolean release() {
         if ( ! mutex.tryAcquire() ) {
