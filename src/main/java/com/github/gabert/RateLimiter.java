@@ -32,8 +32,10 @@ public class RateLimiter {
     }
 
     private void init() {
+        LocalDateTime past = LocalDateTime.now().minus(timeWindow, temporalUnit);
+
         for (int i = 0; i < numOfCalls; i++) {
-            ringBuffer.offer(LocalDateTime.now().minus(timeWindow, temporalUnit));
+            ringBuffer.offer(past);
         }
     }
 
