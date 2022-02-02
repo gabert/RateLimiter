@@ -55,13 +55,11 @@ public class RateLimiter {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime next = ringBuffer.take().plus(timeWindow, temporalUnit);
 
-        if ( now.isBefore(next) ) {
-            try {
-                long sleepTime = ChronoUnit.MILLIS.between(now, next);
+        long sleepTime = ChronoUnit.MILLIS.between(now, next);
 
-                if (sleepTime > 0) {
-                    Thread.sleep(sleepTime);
-                }
+        if (sleepTime > 0) {
+            try {
+                Thread.sleep(sleepTime);
             } catch (InterruptedException e) {}
         }
 
